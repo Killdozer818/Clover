@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title">
+  <title>Clover</title>
+  <rect width="512" height="512" rx="96" fill="#07120d"/>
+  <rect x="34" y="34" width="444" height="444" rx="78" fill="#101f17" stroke="#294437" stroke-width="10"/>
+  <g filter="url(#glow)">
+    <circle cx="256" cy="148" r="76" fill="#7acb86"/>
+    <circle cx="364" cy="256" r="76" fill="#7acb86"/>
+    <circle cx="256" cy="364" r="76" fill="#7acb86"/>
+    <circle cx="148" cy="256" r="76" fill="#7acb86"/>
+    <circle cx="256" cy="256" r="54" fill="#53a85f"/>
+  </g>
+  <path d="M213 137c20-31 67-31 86 0M375 213c31 20 31 67 0 86M299 375c-20 31-67 31-86 0M137 299c-31-20-31-67 0-86" fill="none" stroke="#d8f8dc" stroke-width="14" stroke-linecap="round" opacity=".34"/>
+  <defs>
+    <filter id="glow" x="48" y="48" width="416" height="416" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="0" stdDeviation="12" flood-color="#7acb86" flood-opacity=".38"/>
+    </filter>
+  </defs>
+</svg>
