@@ -1,0 +1,10 @@
+{
+  "name": "clover-reading",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Clover, a private reading shelf PWA.",
+  "scripts": {
+    "start": "python3 -m http.server 4175",
+    "check": "node --check app.js"
+  }
+}
