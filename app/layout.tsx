@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
 import "../styles.css";
+import "./account.css";
 
 export const metadata: Metadata = {
   title: "Clover",
