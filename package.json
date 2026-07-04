@@ -4,7 +4,22 @@
   "private": true,
   "description": "Clover, a private reading shelf PWA.",
   "scripts": {
-    "start": "python3 -m http.server 4175",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
     "check": "node --check app.js"
+  },
+  "dependencies": {
+    "@clerk/nextjs": "^7.0.0",
+    "@neondatabase/serverless": "^1.0.2",
+    "next": "^16.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "typescript": "^5.8.0"
   }
 }
