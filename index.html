@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#07120d" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Clover" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <title>Clover</title>
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="icon" href="icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="icon.svg" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="streak-top">
+        <section class="streak-hero" aria-label="Reading streak">
+          <div>
+            <p class="eyebrow">Current streak</p>
+            <h2 id="streakTitle">0 days</h2>
+            <p id="streakStatus">Read 30 minutes today to keep it alive.</p>
+          </div>
+          <button class="read-today-button" id="quickReadButton" type="button">
+            I've read today!
+          </button>
+        </section>
+
+        <details class="app-menu">
+          <summary aria-label="Open menu">
+            <span class="clover-icon" aria-hidden="true">
+              <span class="leaf leaf-one"></span>
+              <span class="leaf leaf-two"></span>
+              <span class="leaf leaf-three"></span>
+              <span class="leaf leaf-four"></span>
+            </span>
+            <span class="menu-name">Clover</span>
+          </summary>
+          <div class="menu-panel">
+            <button class="menu-item active" data-view="bookshelf">
+              <span class="menu-icon icon-shelf" aria-hidden="true"></span>
+              <span>Bookshelf</span>
+            </button>
+            <button class="menu-item" data-view="currently-reading">
+              <span class="menu-icon icon-open" aria-hidden="true"></span>
+              <span>Currently reading</span>
+            </button>
+            <button class="menu-item" data-view="want-to-read">
+              <span class="menu-icon icon-stack" aria-hidden="true"></span>
+              <span>To be read</span>
+            </button>
+            <button class="menu-item" data-view="read">
+              <span class="menu-icon icon-pile" aria-hidden="true"></span>
+              <span>Read archive</span>
+            </button>
+
+            <button class="menu-item" data-view="stats" type="button">
+              <span class="menu-icon icon-stats" aria-hidden="true"></span>
+              <span>Stats</span>
+            </button>
+            <button class="menu-item panel-toggle" data-panel="settings" type="button">
+              <span class="menu-icon icon-settings" aria-hidden="true"></span>
+              <span>Settings</span>
+            </button>
+
+            <section class="menu-panel-section" id="settingsPanel">
+              <div class="save-status" id="saveStatus">Saved locally</div>
+              <label class="menu-item settings-action file-button">
+                <span>Import Goodreads CSV</span>
+                <input id="csvInput" type="file" accept=".csv,text/csv" />
+              </label>
+              <button class="menu-item settings-action" id="exportButton" type="button">
+                <span>Export library</span>
+              </button>
+            </section>
+          </div>
+        </details>
+      </header>
+
+      <section class="library-layout">
+        <section class="bookshelf-panel">
+          <div class="shelf-toolbar">
+            <div class="toolbar-actions">
+              <input id="searchInput" type="search" placeholder="Search your shelf" />
+              <button class="primary-button" id="addBookButton" type="button">Add book</button>
+            </div>
+          </div>
+          <div class="bookcase" id="bookGrid"></div>
+          <div class="stats-page" id="statsPage" hidden></div>
+        </section>
+
+        <aside class="reading-panel">
+          <section class="log-panel">
+            <div class="log-panel-content">
+              <div class="panel-heading compact">
+                <div>
+                  <h3>Log today</h3>
+                </div>
+              </div>
+              <form id="sessionForm" class="session-form">
+                <select id="sessionBook" required></select>
+                <div class="split">
+                  <label>
+                    <span>Minutes</span>
+                    <input id="sessionMinutes" type="number" min="1" value="30" required />
+                  </label>
+                  <label>
+                    <span>Pages</span>
+                    <input id="sessionPages" type="number" min="0" value="0" />
+                  </label>
+                </div>
+                <button class="primary-button wide" type="submit">Log session</button>
+              </form>
+            </div>
+            <div class="session-logged-overlay" aria-hidden="true">Session logged</div>
+          </section>
+
+          <section class="timeline-panel">
+            <div class="panel-heading compact">
+              <div>
+                <p class="eyebrow">Last 28 days</p>
+                <h3>Book timeline</h3>
+              </div>
+            </div>
+            <div class="cover-timeline" id="coverTimeline" aria-label="Books read over the last 28 days"></div>
+          </section>
+        </aside>
+      </section>
+    </main>
+
+    <dialog id="bookDialog">
+      <form method="dialog" class="dialog-card" id="bookForm">
+        <div class="dialog-heading">
+          <div>
+            <p class="eyebrow">Book details</p>
+            <h3 id="dialogTitle">Add book</h3>
+          </div>
+          <button class="icon-button" value="cancel" title="Close" type="button" id="closeDialog">
+            <span aria-hidden="true">x</span>
+          </button>
+        </div>
+        <input type="hidden" id="bookId" />
+        <input type="hidden" id="bookCoverId" />
+        <label class="lookup-field">
+          <span>Title</span>
+          <input id="bookTitle" autocomplete="off" required />
+          <div class="suggestions" id="bookSuggestions"></div>
+        </label>
+        <label>
+          <span>Author</span>
+          <input id="bookAuthor" required />
+        </label>
+        <div class="split">
+          <label>
+            <span>Shelf</span>
+            <select id="bookShelf">
+              <option value="want-to-read">To be read</option>
+              <option value="currently-reading">Currently reading</option>
+              <option value="read">Read</option>
+            </select>
+          </label>
+          <label>
+            <span>ISBN</span>
+            <input id="bookIsbn" inputmode="numeric" />
+          </label>
+        </div>
+        <div class="split">
+          <label>
+            <span>Total pages</span>
+            <input id="bookTotalPages" type="number" min="0" value="0" />
+          </label>
+          <label>
+            <span>Tags</span>
+            <input id="bookTags" placeholder="mystery, fast, series" />
+          </label>
+        </div>
+        <label class="rating-field">
+          <span>Rating</span>
+          <div class="star-slider" id="starSlider">
+            <div class="star-track" aria-hidden="true"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+            <div class="star-fill" id="ratingStarsFill" aria-hidden="true"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+            <input id="bookRating" aria-label="Rating" type="range" min="0" max="5" step="0.25" value="0" />
+          </div>
+          <strong id="ratingValue">0.00 stars</strong>
+        </label>
+        <div class="book-links" id="bookLinks"></div>
+        <div class="dialog-actions">
+          <button class="secondary-button" type="button" id="deleteBookButton">Delete</button>
+          <button class="primary-button" type="submit">Save book</button>
+        </div>
+      </form>
+    </dialog>
+
+    <script src="app.js"></script>
+  </body>
+</html>
