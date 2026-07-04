@@ -1,4 +1,4 @@
-import { SignInButton, UserButton } from "@clerk/nextjs";
+import { SignInButton, SignUpButton, UserButton } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
 import Script from "next/script";
 
@@ -202,9 +202,14 @@ export default async function Home() {
             <p className="eyebrow">Clover</p>
             <h1>Your private reading shelf</h1>
             <p>Sign in to sync your books, sessions, streaks, and ratings across your devices.</p>
-            <SignInButton mode="modal">
-              <button className="primary-button login-button" type="button">Sign in</button>
-            </SignInButton>
+            <div className="login-actions">
+              <SignInButton mode="modal">
+                <button className="primary-button login-button" type="button">Sign in</button>
+              </SignInButton>
+              <SignUpButton mode="modal">
+                <button className="secondary-button login-button" type="button">Create account</button>
+              </SignUpButton>
+            </div>
           </section>
         </main>
     );
